@@ -16,7 +16,7 @@ export class Payment {
   @Column({ unique: true })
   orderId: string;
 
-  @Column({ type: 'varchar', nullable: true, default: null}) // Optional field
+  @Column({ type: 'varchar', nullable: true, default: null, unique: true }) // Optional field
   razorPayOrderId: string | null;
 
   @Column({ type: 'varchar', nullable: true, default: null }) // Optional field
