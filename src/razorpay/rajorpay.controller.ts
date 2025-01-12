@@ -15,11 +15,8 @@ export class RazorpayController {
     
     try {
       const order = await this.razorpayService.createOrder(amount, currency);
-      // return res.status(HttpStatus.CREATED).json(order);
       return order;
     } catch (error) {
-        console.log(error)
-      // return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ error: error.message });
       throw error;
     }
   }
@@ -65,7 +62,6 @@ export class RazorpayController {
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = body;
 
     const payload = `${razorpay_order_id}|${razorpay_payment_id}`;
-    console.log("verifying payments", payload)
     const isValid = await this.razorpayService.verifySignature(payload, razorpay_signature);
 
     if (isValid) {
@@ -79,9 +75,7 @@ export class RazorpayController {
         success: true, 
         message: 'Payment verified successfully.'
       }
-      // return res.status(HttpStatus.OK).json({ success: true, message: 'Payment verified successfully.' });
     } else {
-      // return res.status(HttpStatus.BAD_REQUEST).json({ success: false, message: 'Invalid signature' });
       throw new ForbiddenException("Not authorized");
     }
   }
